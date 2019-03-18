@@ -12,7 +12,7 @@
                         <li><a href="{{route('teacher.post.create')}}"><i class="icon-envelope"></i><span class="hidden-tablet"> Add Post</span></a></li>
                         
                         <li><a href="{{ route('teacher.allassignment') }}"><i class="icon-eye-open"></i><span class="hidden-tablet"> Assignments</span></a></li>
-                        <li><a href="widgets.html"><i class="icon-dashboard"></i><span class="hidden-tablet"> Attendents</span></a></li>
+                        <li><a href="{{ route('teacher.attandance') }}"><i class="icon-dashboard"></i><span class="hidden-tablet"> Attendents</span></a></li>
                         <li>
                             <a class="dropmenu" href="#"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> Students</span><span class="label label-important"> 3 </span></a>
                             <ul>

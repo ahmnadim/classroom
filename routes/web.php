@@ -77,6 +77,11 @@ Route::group(['as'=>'teacher.', 'prefix'=>'teacher', 'namespace'=>'Teacher', 'mi
 	Route::PUT('profile/update', 'ProfileController@profileUpdate')->name('profile.update');
 	Route::PUT('password/update', 'ProfileController@passwordUpdate')->name('password.update');
 	Route::get('course-details/{id}', 'CourseController@courseDetails')->name('course.showdetails');
+
+	Route::get('attandance', 'DashboardController@attandance')->name('attandance');
+	Route::get('todays', 'DashboardController@todays')->name('todays');
+	Route::post('attandance/add/{id}', 'DashboardController@attandance_add')->name('attandance.add');
+	Route::post('attandance/remove/{id}', 'DashboardController@attandance_remove')->name('attandance.remove');
 	
 
 });

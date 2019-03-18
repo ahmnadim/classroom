@@ -32,4 +32,9 @@ class Student extends Authenticatable
     {
         return $this->belongsToMany('App\Course')->withTimestamps();
     }
+
+    public function attandance()
+    {
+        return $this->hasOne('App\Attendance');
+    }
 }
