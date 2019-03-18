@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2019 at 04:47 PM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.10
+-- Generation Time: Mar 18, 2019 at 06:38 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -51,6 +51,31 @@ INSERT INTO `assignments` (`id`, `student_id`, `teacher`, `course`, `assignment`
 (13, 1, 'John Doe', 'Chemistry', '5c70437a58609notify-bg.jpg', '2019-02-22 12:46:18', '2019-02-22 12:46:18'),
 (14, 1, 'John Doe', 'Hypertext Markup Language.', '5c750748f0b20Report.docx', '2019-02-26 03:30:49', '2019-02-26 03:30:49'),
 (15, 1, 'John Doe', 'Chemistry', '5c751967ef345me.pdf', '2019-02-26 04:48:08', '2019-02-26 04:48:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances`
+--
+
+CREATE TABLE `attendances` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `date` text NOT NULL,
+  `is_attend` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `attendances`
+--
+
+INSERT INTO `attendances` (`id`, `student_id`, `teacher_id`, `date`, `is_attend`, `created_at`, `updated_at`) VALUES
+(18, 1, 1, '17-03-2019', 1, '2019-03-17 08:51:08', '2019-03-17 08:51:08'),
+(19, 11, 1, '01-03-2019', 1, '2019-03-17 08:55:11', '2019-03-17 08:55:11'),
+(20, 11, 1, '17-03-2019', 1, '2019-03-17 08:55:31', '2019-03-17 08:55:31');
 
 -- --------------------------------------------------------
 
@@ -107,7 +132,6 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`id`, `teacher_id`, `name`, `slug`, `details`, `image`, `created_at`, `updated_at`) VALUES
 (13, 6, 'Codeigniter php framework', 'codeigniter-php-framework', 'Details about codeigniter php framework.', 'codeigniter-php-framework-2019-01-14-5c3c562a3e424.jpg', '2019-01-14 03:28:10', '2019-01-14 03:28:10'),
-(17, 1, 'Hypertext Markup Language.', 'hypertext-markup-language', 'W3 standard html code.', 'hypertext-markup-language-2019-01-14-5c3c57c47d563.png', '2019-01-14 03:35:00', '2019-01-14 03:35:00'),
 (24, 1, 'Chemistry', 'chemistry', 'Chemistry is the scientific discipline involved with elements and compounds composed of atoms, molecules and ions: their composition, structure, properties, behavior and the changes they undergo during a reaction with other substances.', 'chemistry-2019-02-20-5c6d2ec0ea941.jpg', '2019-02-20 04:41:05', '2019-02-20 04:41:05'),
 (25, 1, 'Differential Equeation', 'differential-equeation', 'This course is intended to expose you to the basic ideas of Differential Equations combined with some ideas from Linear Algebra. To be successful, a student must be able at the end of the class to solve the majority of the problems with no external help .', 'differential-equeation-2019-02-21-5c6e652e5aae2.jpg', '2019-02-21 02:45:35', '2019-02-21 02:45:35'),
 (26, 7, 'Discrete Mathematics', 'discrete-mathematics', 'Tree', 'discrete-mathematics-2019-02-23-5c70e8eda40f8.jpg', '2019-02-23 00:32:14', '2019-02-23 00:32:14');
@@ -182,6 +206,22 @@ CREATE TABLE `course_teacher` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -209,7 +249,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2019_01_15_183131_create_assignments_table', 4),
 (12, '2019_02_19_114056_create_posts_table', 5),
 (13, '2019_02_21_075921_create_subscribers_table', 6),
-(14, '2019_02_21_152146_create_contacts_table', 7);
+(14, '2019_02_21_152146_create_contacts_table', 7),
+(15, '2019_03_10_200043_create_jobs_table', 8);
 
 -- --------------------------------------------------------
 
@@ -222,6 +263,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('teacher@gmail.com', '$2y$10$FW.lU4CmE/3KmgBPPJJ1LelSUjqV5pQuV.9.bd6WaSkAeinB7yL1G', '2019-03-11 00:20:44');
 
 -- --------------------------------------------------------
 
@@ -249,11 +297,9 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `teacher_id`, `course_id`, `title`, `slug`, `image`, `body`, `course_link`, `view_count`, `status`, `created_at`, `updated_at`) VALUES
-(4, 1, 17, 'what is HTML?', 'what-is-html', 'what-is-html-2019-02-20-5c6d0191610ca.png', 'Hypertext Markup Language is the standard markup language for creating web pages and web applications. With Cascading Style Sheets and JavaScript, it forms a triad of cornerstone technologies for the World Wide Web.', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/CKlh1lwe2rY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-20 01:28:18', '2019-02-20 01:28:18'),
 (5, 6, 13, 'What is Codeigniter Framework?', 'what-is-codeigniter-framework', 'what-is-codeigniter-framework-2019-02-20-5c6d37448b3c4.png', 'CodeIgniter is an open-source software rapid development web framework, for use in building dynamic web sites with PHP.', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/i3li9XeviVo\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-20 05:17:24', '2019-02-20 05:17:24'),
 (6, 1, 24, 'Chemistry', 'chemistry', 'chemistry-2019-02-22-5c703d700ba8c.jpg', 'What is Chemistry ?', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/t8x3wdXZGEY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-22 12:20:32', '2019-02-22 12:20:32'),
-(7, 1, 24, 'Periodic Table Song', 'periodic-table-song', 'periodic-table-song-2019-02-22-5c70403f2c46b.png', 'About Periodic Table', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/rz4Dd1I_fX0\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-22 12:32:31', '2019-02-22 12:32:31'),
-(8, 7, 26, 'Discrete Math Bangla Tutorial', 'discrete-math-bangla-tutorial', 'discrete-math-bangla-tutorial-2019-02-23-5c71927331b29.png', 'Discrete Math is an interesting subject', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Uhr1DokOojs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-23 12:35:31', '2019-02-23 12:35:31');
+(7, 1, 24, 'Periodic Table Song', 'periodic-table-song', 'periodic-table-song-2019-02-22-5c70403f2c46b.png', 'About Periodic Table', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/rz4Dd1I_fX0\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 0, 0, '2019-02-22 12:32:31', '2019-02-22 12:32:31');
 
 -- --------------------------------------------------------
 
@@ -268,6 +314,7 @@ CREATE TABLE `students` (
   `about` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'student',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -277,9 +324,9 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `name`, `email`, `about`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Student', 'student@gmail.com', NULL, NULL, '$2y$10$/dEToU2atjZS9ZwJNGTlhO5AFWiZiiiqEit7ZQV3iTj1jWJn1dwqC', '1UTr6yuZ0avnrMx7nzFaZr09bHDpQq68hoEbLFWnUwxW3c9PySoN7QddrDXN', '2019-01-14 00:31:18', '2019-01-14 00:31:18'),
-(11, 'Student 1', 'student1@gmail.com', NULL, NULL, '$2y$10$5JdFdJ/6UCH5DeEuFWA7IOdkeCSufPHvRtK9AW7Fo27AVuLRCRp.y', 'PrsY5wQ1b41ep5jDliJ4l91LcquUZSXrou0SpVnq1ph0WGa58FUqnEuYaF6r', '2019-01-15 00:04:58', '2019-01-15 00:04:58');
+INSERT INTO `students` (`id`, `name`, `email`, `about`, `email_verified_at`, `password`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Student', 'student@gmail.com', NULL, NULL, '$2y$10$/dEToU2atjZS9ZwJNGTlhO5AFWiZiiiqEit7ZQV3iTj1jWJn1dwqC', 'student', 'Wh0F1l8DG3IF0LWp9s4YwHWWORbeI0MJGgVXhyzBWnil1uIu1tZ8ZThBNtzu', '2019-01-14 00:31:18', '2019-01-14 00:31:18'),
+(11, 'Student 1', 'student1@gmail.com', NULL, NULL, '$2y$10$5JdFdJ/6UCH5DeEuFWA7IOdkeCSufPHvRtK9AW7Fo27AVuLRCRp.y', 'student', 'PrsY5wQ1b41ep5jDliJ4l91LcquUZSXrou0SpVnq1ph0WGa58FUqnEuYaF6r', '2019-01-15 00:04:58', '2019-01-15 00:04:58');
 
 -- --------------------------------------------------------
 
@@ -317,6 +364,8 @@ CREATE TABLE `teachers` (
   `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.jpg',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_valid` tinyint(1) NOT NULL DEFAULT '0',
+  `type` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'teacher',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -326,10 +375,10 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `name`, `email`, `about`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'John Doe', 'teacher@gmail.com', 'PHP Lecturer', 'john-doe-2019-02-19-5c6c402431ed3.jpg', NULL, '$2y$10$IBLVkqGwkWsnNQDC5EqPg.6pmE0QGcJtvF0767tkzY3iLw.dfELiq', 'JIwc7irRk7RdH4Ug47yYkKJUrGwCP3rxGVyOSvnnDmSCoBnLaXaGCou73NCg', '2019-01-14 00:34:01', '2019-02-19 11:43:00'),
-(6, 'Debid Luich', 'teacher1@gmail.com', 'Physics', 'john-doe-2019-01-16-5c3ed80181efa.jpeg', NULL, '$2y$10$eXaXp7MiWMKEyJZy4Q6ptOGFvmhgcIGls2Ogh9CpfaDNAL1sUlLf2', NULL, '2019-01-15 00:06:55', '2019-01-15 00:06:55'),
-(7, 'shuvo ahmed', 'shuvo@gmail.com', 'Math Teacher', 'shuvo-ahmed-2019-02-26-5c74ff70e2dce.jpg', NULL, '$2y$10$CaMYPEWzzLVFT0Mdr9dVF.9lTQcPFwWKu.NSW6tKQyJdiL8Jmc0f.', NULL, '2019-02-23 00:22:20', '2019-02-26 02:57:20');
+INSERT INTO `teachers` (`id`, `name`, `email`, `about`, `image`, `email_verified_at`, `password`, `is_valid`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'John Doe', 'teacher@gmail.com', 'PHP Lecturer', 'john-doe-2019-02-19-5c6c402431ed3.jpg', NULL, '$2y$10$bHRsYx8WZPyF/.l7aKr4web.Mms4MhomNqFAiIm4o./p8DugfvZIy', 1, 'teacher', 'HPC00NeKIrE4tFTElZRzipegoKnMlkqGv4mEgq1t0b0mK2L6Xu3SaWbJ1LBI', '2019-01-14 00:34:01', '2019-03-11 00:13:08'),
+(6, 'Debid Luich', 'teacher1@gmail.com', 'Physics', 'john-doe-2019-01-16-5c3ed80181efa.jpeg', NULL, '$2y$10$eXaXp7MiWMKEyJZy4Q6ptOGFvmhgcIGls2Ogh9CpfaDNAL1sUlLf2', 1, 'teacher', NULL, '2019-01-15 00:06:55', '2019-03-11 00:51:30'),
+(20, 'Ahmad ul hoq Nadim', 'ahmadulhoqnadim@gamil.com', 'asdasd', 'default.jpg', NULL, '$2y$10$jIMwYwSlTWBkcjE0RejGnOGbveVchFsxw3Q17st5hlfh8Zgbq5K1S', 1, 'teacher', '56htSKx0KipPzE6kWKkpnmT0ssbz0dr1AtDAKhg01SqC1HVrZ9kPXTywOWxo', '2019-03-11 00:33:52', '2019-03-11 00:51:22');
 
 -- --------------------------------------------------------
 
@@ -343,6 +392,7 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -352,8 +402,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$6HX07.WN4u.usZeutkdHxeClNeXswFxiefLcGldMMDIG31T4TPNUS', NULL, '2019-01-14 00:33:18', '2019-01-14 00:33:18');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$UFEEIvikSab5EkUcrq/rwu9Cr2x3EIEKr/80oapHBcBBluj8fxoRS', 'admin', 'k2FxD7nQPGnuravOd9BvJ2ZmbLfGZ7JqMFzcqwtwDmJLL2XGgkxHTvHeDTVG', '2019-01-14 00:33:18', '2019-03-10 14:30:34');
 
 --
 -- Indexes for dumped tables
@@ -363,6 +413,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- Indexes for table `assignments`
 --
 ALTER TABLE `assignments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attendances`
+--
+ALTER TABLE `attendances`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -395,6 +451,13 @@ ALTER TABLE `course_student`
 --
 ALTER TABLE `course_teacher`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
 
 --
 -- Indexes for table `migrations`
@@ -454,6 +517,12 @@ ALTER TABLE `assignments`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
@@ -484,16 +553,22 @@ ALTER TABLE `course_teacher`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -511,7 +586,7 @@ ALTER TABLE `subscribers`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
